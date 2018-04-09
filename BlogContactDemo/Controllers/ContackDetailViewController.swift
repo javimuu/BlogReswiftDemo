@@ -63,12 +63,18 @@ class ContactDetailViewController: UIViewController {
     }
     
     @objc private func updateContact() {
-        print("ooo")
+        //　ボタンをくりっくして、見やすくしたいので、ボタンの色を変更します。
+        submitBtn.backgroundColor = .darkGray
+        
         view.endEditing(true)
         let name = detailView.nameTextField.text ?? ""
         let phoneNumber = detailView.phoneTextField.text ?? ""
         
         contact = ContactFixtures.updateData(with: contact.id, name: name, phone: phoneNumber)
+        // 前のボタンの色を戻します。
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.submitBtn.backgroundColor = .purple
+        }
     }
 }
 
