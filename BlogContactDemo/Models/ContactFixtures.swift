@@ -5,7 +5,6 @@
 //  Created by muu van duy on 2018/04/09.
 //  Copyright © 2018 muuvanduy. All rights reserved.
 //
-
 import Foundation
 
 struct ContactFixtures {
@@ -20,11 +19,10 @@ struct ContactFixtures {
     }
     
     public static func updateData(with id: Int, name: String, phone: String) -> Contact {
-        var tempData = ContactFixtures.currentData
         let newEntry: Contact = Contact(id: id, name: name, phone: phone)
-        for (offset, data) in tempData.enumerated() {
+        for (offset, data) in ContactFixtures.currentData.enumerated() {
             if data.id == id {
-                tempData[offset] = newEntry
+                ContactFixtures.currentData[offset] = newEntry
             }
         }
         

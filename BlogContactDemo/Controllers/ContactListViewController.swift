@@ -7,14 +7,36 @@
 //
 
 import UIKit
+import ReSwift
 
 class ContactListViewController: UITableViewController {
     fileprivate let cellId = "cellId"
-    fileprivate var dataSources: [Contact] = ContactFixtures.currentData
+    fileprivate var dataSources: [Contact] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+    }
+    
+    private func fetchData() {
+        store.dispatch(ContactListState.getContactList())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+        if store.state.contactListState.model == nil {
+            fetchData()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        store.unsubscribe(self)
     }
     
     private func setupViews() {
@@ -50,5 +72,13 @@ class ContactListViewController: UITableViewController {
         let item = dataSources[indexPath.row]
         let controller = ContactDetailViewController(contact: item)
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+extension ContactListViewController: StoreSubscriber {
+    func newState(state: AppState) {
+        if let model = state.contactListState.model {
+            dataSources = model
+        }
     }
 }
