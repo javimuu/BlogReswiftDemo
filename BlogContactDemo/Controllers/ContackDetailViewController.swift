@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReSwift
 
 class ContactDetailViewController: UIViewController {
     private let detailView = ContactDetailView()
@@ -29,6 +30,17 @@ class ContactDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        store.dispatch(RefreshContactDetailAction())
+        store.unsubscribe(self)
     }
     
     private func setupViews() {
@@ -63,12 +75,11 @@ class ContactDetailViewController: UIViewController {
     }
     
     @objc private func updateContact() {
-        print("ooo")
         view.endEditing(true)
         let name = detailView.nameTextField.text ?? ""
         let phoneNumber = detailView.phoneTextField.text ?? ""
         
-        contact = ContactFixtures.updateData(with: contact.id, name: name, phone: phoneNumber)
+        store.dispatch(ContactDetailState.updateContact(with: contact.id, name: name, phone: phoneNumber))
     }
 }
 
@@ -76,5 +87,13 @@ extension ContactDetailViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
+    }
+}
+
+extension ContactDetailViewController: StoreSubscriber {
+    func newState(state: AppState) {
+        if let _ = state.contactDetailState.model {
+            let _ = navigationController?.popViewController(animated: true)
+        }
     }
 }

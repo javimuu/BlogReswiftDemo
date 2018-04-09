@@ -20,11 +20,10 @@ struct ContactFixtures {
     }
     
     public static func updateData(with id: Int, name: String, phone: String) -> Contact {
-        var tempData = ContactFixtures.currentData
         let newEntry: Contact = Contact(id: id, name: name, phone: phone)
-        for (offset, data) in tempData.enumerated() {
+        for (offset, data) in ContactFixtures.currentData.enumerated() {
             if data.id == id {
-                tempData[offset] = newEntry
+                ContactFixtures.currentData[offset] = newEntry
             }
         }
         
