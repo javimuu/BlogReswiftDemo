@@ -9,7 +9,5 @@
 import Foundation
 
 struct ContactDetailState {
-    var fetchStatus: String = ""
     var model: Contact?
-    var error: Error?
 }

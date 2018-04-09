@@ -10,6 +10,4 @@ import Foundation
 
 struct ContactListState {
     var model: [Contact]?
-    var error: Error?
 }
-
