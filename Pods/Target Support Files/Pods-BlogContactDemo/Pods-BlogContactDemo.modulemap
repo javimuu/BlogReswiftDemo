@@ -1,0 +1,6 @@
+framework module Pods_BlogContactDemo {
+  umbrella header "Pods-BlogContactDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
