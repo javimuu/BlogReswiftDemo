@@ -19,13 +19,11 @@ class ContactDetailViewController: UIViewController {
         return btn
     }()
     
-    fileprivate var name: String = ""
-    fileprivate var phoneNumber: String = ""
+    fileprivate var contact: Contact!
     
-    convenience init(name _name: String, phone _number: String) {
+    convenience init(contact _contact: Contact) {
         self.init()
-        name = _name
-        phoneNumber = _number
+        contact = _contact
     }
     
     override func viewDidLoad() {
@@ -42,8 +40,10 @@ class ContactDetailViewController: UIViewController {
         detailView.phoneTextField.delegate = self
         
         // set default value
-        detailView.nameTextField.text = name
-        detailView.phoneTextField.text = phoneNumber
+        detailView.nameTextField.text = contact.name
+        detailView.phoneTextField.text = contact.phoneNumber
+        
+        submitBtn.addTarget(self, action: #selector(updateContact), for: .touchUpInside)
         
         // detailView Constraints
         detailView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -59,7 +59,16 @@ class ContactDetailViewController: UIViewController {
         submitBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         submitBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
         
-        navigationItem.title = name
+        navigationItem.title = contact.name
+    }
+    
+    @objc private func updateContact() {
+        print("ooo")
+        view.endEditing(true)
+        let name = detailView.nameTextField.text ?? ""
+        let phoneNumber = detailView.phoneTextField.text ?? ""
+        
+        contact = ContactFixtures.updateData(with: contact.id, name: name, phone: phoneNumber)
     }
 }
 

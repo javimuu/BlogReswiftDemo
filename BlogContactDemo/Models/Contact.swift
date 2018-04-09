@@ -9,10 +9,12 @@
 import Foundation
 
 struct Contact {
+    let id: Int
     let name: String
     let phoneNumber: String
     
-    init(name _name: String, phone _number: String) {
+    init(id _id: Int, name _name: String, phone _number: String) {
+        id = _id
         name = _name
         phoneNumber = _number
     }

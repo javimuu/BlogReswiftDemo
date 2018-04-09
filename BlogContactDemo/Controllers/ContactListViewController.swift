@@ -10,7 +10,7 @@ import UIKit
 
 class ContactListViewController: UITableViewController {
     fileprivate let cellId = "cellId"
-    fileprivate var dataSources: [Contact] = ContactFixtures.initializeData()
+    fileprivate var dataSources: [Contact] = ContactFixtures.currentData
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +48,7 @@ class ContactListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = dataSources[indexPath.row]
-        let controller = ContactDetailViewController(name: item.name, phone: item.phoneNumber)
+        let controller = ContactDetailViewController(contact: item)
         navigationController?.pushViewController(controller, animated: true)
     }
 }
