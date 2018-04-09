@@ -12,7 +12,7 @@ struct ContactFixtures {
     public static var currentData: [Contact] = ContactFixtures.initializeData()
     
     public static func initializeData() -> [Contact] {
-        let sources: [String: String] = ["John": "070-0000-0000", "Hiroki": "070-0000-0001", "Tarou": "070-0000-0002"]
+        let sources: [String: String] = ["John": "070-0000-0000", "Yamamoto": "070-0000-0001", "Tarou": "070-0000-0002"]
         let contacts = sources.enumerated().map { (offset, element) -> Contact in
             return Contact(id: offset + 1, name: element.key, phone: element.value)
         }
