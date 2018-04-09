@@ -11,19 +11,16 @@ import ReSwift
 struct ContactListReducer {}
 
 extension ContactListReducer {
-    typealias ReducerStateType = ContactListState
-    func handleAction(action: Action, state: ReducerStateType?) -> ReducerStateType {
+    func handleAction(action: Action, state: ContactListState?) -> ContactListState {
         let prevState = state ?? ContactListState()
         var nextState = prevState
         
-        print(action, "aaa")
         switch action {
         case is RequestGetContactListAction:
             nextState.model = nil
         case let action as ResponseGetContactListAction:
             nextState.model = action.model
         case is ResponseUpdateContactDetailAction:
-            print("bbbb")
             nextState.model = nil
         default:
             break
